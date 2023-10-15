@@ -8,21 +8,33 @@ import {
   Text,
   UserContainer,
 } from "./Card.styled";
-import userLogo from "../../accets/images/hansel.png";
 import { useState } from "react";
 
-export const Card = ({ avatar, followers, tweets }) => {
-  const [follower, setFollower] = useState(Number(followers));
-  const [isFollow, setIsFollow] = useState(false);
+export const Card = ({ id, avatar, followers, tweets }) => {
+  const savedFollowerCount = localStorage.getItem(`followerCount-${id}`);
+  const [follower, setFollower] = useState(
+    savedFollowerCount ? JSON.parse(savedFollowerCount) : Number(followers)
+  );
+  const savedIsFollow = localStorage.getItem(`isFollow-${id}`);
+  const [isFollow, setIsFollow] = useState(
+    savedIsFollow ? JSON.parse(savedIsFollow) : false
+  );
   const handleOnFollow = (evt) => {
-    if (isFollow) {
-      setIsFollow(false);
-      setFollower(follower - 1);
-      return;
-    }
-    setFollower(follower + 1);
-    setIsFollow(true);
+    setFollower((prevFollower) => {
+      const updatedFollower = isFollow ? prevFollower - 1 : prevFollower + 1;
+      localStorage.setItem(
+        `followerCount-${id}`,
+        JSON.stringify(updatedFollower)
+      );
+      return updatedFollower;
+    });
+    setIsFollow((prevIsFollow) => {
+      const updatedIsFollow = !prevIsFollow;
+      localStorage.setItem(`isFollow-${id}`, JSON.stringify(updatedIsFollow));
+      return updatedIsFollow;
+    });
   };
+  const formattedFollower = follower.toLocaleString("en-US");
   return (
     <StyledCard>
       <UserContainer>
@@ -35,9 +47,9 @@ export const Card = ({ avatar, followers, tweets }) => {
       </UserContainer>
       <ContentContainer>
         <Text> {tweets} tweets</Text>
-        <Text style={{ marginBottom: 26 }}> {follower} Followers</Text>
-        <Button onClick={handleOnFollow} isFollow={isFollow}>
-          {isFollow ? "Unfollow" : "Follow"}
+        <Text style={{ marginBottom: 26 }}> {formattedFollower} Followers</Text>
+        <Button onClick={handleOnFollow} isFollow={isFollow} type="button">
+          {isFollow ? "Following" : "Follow"}
         </Button>
       </ContentContainer>
     </StyledCard>

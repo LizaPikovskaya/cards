@@ -1,9 +1,12 @@
 import { Container } from "../../components/GlobalStyles/Container.styled";
+import { Section, Title } from "./Home.styled";
 
 export const Home = () => {
   return (
-    <Container>
-      <p>Hey, this is HOMEPAGE!</p>
-    </Container>
+    <Section>
+      <Container>
+        <Title>Welcome to the homepage!</Title>
+      </Container>
+    </Section>
   );
 };

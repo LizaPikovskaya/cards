@@ -72,7 +72,6 @@ export const ImageBcg = styled.div`
   border-radius: 62px;
   background-color: #5736a3;
   overflow: hidden;
-  /* object-fit: ; */
 `;
 
 export const UserImage = styled.img`
@@ -100,11 +99,8 @@ export const Text = styled.p`
 `;
 
 export const Button = styled.button`
-  /* display: flex; */
   width: 196px;
   padding: 14px 28px;
-  /* justify-content: center;
-  align-items: center; */
   text-align: center;
   border-radius: 10.311px;
   background: ${({ isFollow }) => (isFollow ? "#5CD3A8" : "#ebd8ff")};
