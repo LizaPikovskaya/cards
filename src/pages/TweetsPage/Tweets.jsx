@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import { Card } from "../../components/Card/Card";
 import { Container } from "../../components/GlobalStyles/Container.styled";
 import { fetchAllCards, fetchCards } from "../../services/axios";
-import { List, LoadMoreButton } from "./Tweets.styled";
+import { BackButton, FlexWrapper, List, LoadMoreButton } from "./Tweets.styled";
 import { Loader } from "../../components/Loader/Loader";
 import { Dropdown } from "./Dropdown/Dropdown";
 import toast from "react-hot-toast";
+import { Button } from "../../components/Card/Card.styled";
+import { useNavigate } from "react-router-dom";
 
 export const Tweets = () => {
   const [users, setUsers] = useState([]);
@@ -17,7 +19,7 @@ export const Tweets = () => {
 
   const [loading, setLoading] = useState(null);
   const [selectedOption, setSelectedOption] = useState("");
-
+  const navigation = useNavigate();
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -58,13 +60,13 @@ export const Tweets = () => {
       filteredUsers = allUsers;
       setHideButton(true);
     } else if (selectedOption === "follow") {
-      filteredUsers = allUsers.filter((user) =>
-        JSON.parse(localStorage.getItem(`isFollow-${user.id}`))
+      filteredUsers = allUsers.filter(
+        (user) => !JSON.parse(localStorage.getItem(`isFollow-${user.id}`))
       );
       setHideButton(true);
     } else if (selectedOption === "following") {
-      filteredUsers = allUsers.filter(
-        (user) => !JSON.parse(localStorage.getItem(`isFollow-${user.id}`))
+      filteredUsers = allUsers.filter((user) =>
+        JSON.parse(localStorage.getItem(`isFollow-${user.id}`))
       );
       setHideButton(true);
     } else {
@@ -79,14 +81,20 @@ export const Tweets = () => {
   const handleOptionChange = (evt) => {
     setSelectedOption(evt.target.value);
   };
+  const handleOnBackButton = () => {
+    navigation("/");
+  };
   const isHideButton = emptyData || hideButton;
   return (
     <section style={{ padding: "30px 0px" }}>
       <Container>
-        <Dropdown
-          handleOptionChange={handleOptionChange}
-          value={selectedOption}
-        />
+        <FlexWrapper>
+          <BackButton onClick={handleOnBackButton}>Back</BackButton>
+          <Dropdown
+            handleOptionChange={handleOptionChange}
+            value={selectedOption}
+          />
+        </FlexWrapper>
         <List>
           {filteredUsers.map(({ name, id, avatar, followers, tweets }) => (
             <li key={`${name}-${id}`}>

@@ -106,4 +106,11 @@ export const Button = styled.button`
   background: ${({ isFollow }) => (isFollow ? "#5CD3A8" : "#ebd8ff")};
   box-shadow: 0px 3.43693px 3.43693px 0px rgba(0, 0, 0, 0.25);
   border: transparent;
+  transition: all 300ms linear;
+  text-transform: uppercase;
+
+  &:hover {
+    background: rgba(87, 54, 163, 0.5);
+    color: white;
+  }
 `;

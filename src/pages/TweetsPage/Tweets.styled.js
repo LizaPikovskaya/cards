@@ -31,6 +31,27 @@ export const LoadMoreButton = styled.button`
   }
 `;
 
+export const BackButton = styled.button`
+  display: block;
+  padding: 10px;
+  border: 2px solid black;
+  border-radius: 10px;
+  background-color: transparent;
+  cursor: pointer;
+  transition: all 400ms linear;
+
+  &:hover {
+    background: rgba(87, 54, 163, 1);
+    color: white;
+  }
+`;
+
+export const FlexWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
 export const Text = styled.p`
   margin: 40px auto;
   font-size: 18px;
